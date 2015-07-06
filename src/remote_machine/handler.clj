@@ -9,8 +9,11 @@
     "/visit" []
     :return s/Any
     :body [tree s/Any]
-    (ok (try 
+    (ok (try
+          (println "RCVD:\r\n" tree "\r\n") 
           (binding [*symbols* (atom {})]
-            (last (visit tree)))
+            (let [result (last (visit tree))]
+              (println "SEND:\r\n" result)
+              result))
           (catch Exception e
             (. e toString))))))
