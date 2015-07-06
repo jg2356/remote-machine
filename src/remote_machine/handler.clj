@@ -5,16 +5,12 @@
             [remote-machine.visitor :refer [visit *symbols*]]))
 
 (defapi app
-  (context* 
+  (POST* 
     "/visit" []
-    :tags ["visit"]
-    (POST* 
-      "/" []
-      :return s/Any
-      :body [tree s/Any]
-      :summary "visits the tree"
-      (ok (try 
-            (binding [*symbols* (atom {})]
-              (last (visit tree)))
-            (catch Exception e
-              (. e toString)))))))
+    :return s/Any
+    :body [tree s/Any]
+    (ok (try 
+          (binding [*symbols* (atom {})]
+            (last (visit tree)))
+          (catch Exception e
+            (. e toString))))))
